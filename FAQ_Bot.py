@@ -7,15 +7,12 @@ faq_data = {
 
 import spacy
 
-# Load SpaCy's English language model
 nlp = spacy.load("en_core_web_sm")
 
-# Function to preprocess text
 def preprocess(text):
     doc = nlp(text)
     return " ".join([token.lemma_ for token in doc if not token.is_stop])
 
-# Preprocess the FAQ questions
 processed_faq = {preprocess(question): answer for question, answer in faq_data.items()}
 
 def get_answer(user_question):
@@ -29,12 +26,12 @@ def get_answer(user_question):
             highest_similarity = similarity
             best_match = question
     
-    if highest_similarity > 0.7:  # You can adjust the threshold
+    if highest_similarity > 0.7:  
         return processed_faq[best_match]
     else:
         return "I'm sorry, I don't have an answer to that question. Please visit the Kingston University website or contact their support."
 
-# Chatbot interaction
+
 while True:
     user_input = input("You: ")
     if user_input.lower() in ["exit", "quit", "bye"]:
